@@ -43,6 +43,14 @@ class EmgEncoder():
         self.num_features = num_features
         self.num_sequence = num_sequence
         
+    @property
+    def __is_fitted__(self):
+        try:
+            self.params
+            return True
+        except:
+            return False
+    
     def fit(self, data: np.ndarray) -> dict:
         # データを (trials, sequence, fetures) に整形
         # data = data.reshape(-1, self.num_sequence, self.num_features)
@@ -97,12 +105,8 @@ class EmgEncoder():
     
     def transform(self, data: np.ndarray) -> np.ndarray:
 
-        try:
-            self.params
-        except Exception as e:
-            print("\033[91m" + "fit() もしくは fit_transform() でスケーラーを事前に定義してください" + "\033[0m")
-            raise e
-
+        assert self.__is_fitted__, "\033[91m" + "fit() もしくは fit_transform() でスケーラーを事前に定義してください" + "\033[0m"
+        
         # moveRMSを適用
         data = data.reshape(-1, self.num_sequence, self.num_features)
         data = np.apply_along_axis(self._moveRMS, axis=1, arr=data)
