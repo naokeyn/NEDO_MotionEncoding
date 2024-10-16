@@ -1,0 +1,11 @@
+{
+    "batch_size": 30,
+    "epochs": 100,
+    "learning_rate": 0.0001,
+    "num_layers": [3, 4, 6, 3],
+    "num_splits": 5,
+    "num_workers": 12,
+    "model_type": "ResNet1d",
+    "outdir": "models/ResNet1d_v02",
+    "out_channels": 1
+}
